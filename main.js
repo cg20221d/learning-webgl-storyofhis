@@ -2,17 +2,27 @@ function main() {
   var kanvas = document.getElementById("kanvas");
   var gl = kanvas.getContext("webgl");
 
-  //  vertex shader
-  let vertexShaderCode = "void main() {";
-  ("}");
+  //  vertex shader -> proses posisi
+  let vertexShaderCode = `
+  void main () {
+    float x = 0.0;
+    float y = 0.0;
+    gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+    gl_PointSize = 10.0;
+  }
+  `;
   let vertexShaderObject = gl.createShader(gl.VERTEX_SHADER);
   gl.shaderSource(vertexShaderObject, vertexShaderCode);
   gl.compileShader(vertexShaderObject); // sampai sini sudah jadi .o (dot)o
 
-  // Fragment shader
+  // Fragment shader -> proses warna
   let fragmentShaderCode = `
+  precision mediump float;
   void main () {
-    
+    float r = 0.0;
+    float g = 0.0;
+    float b = 1.0;
+    gl_FragColor = vec4(r, g, b, 1.0);
   }
 `;
   let fragmentShaderObject = gl.createShader(gl.FRAGMENT_SHADER);
@@ -29,5 +39,7 @@ function main() {
   //            merah, hijau, biru, transparansi
 
   gl.clear(gl.COLOR_BUFFER_BIT);
+
+  gl.drawArrays(gl.POINTS, 0, 1);
 }
 main();
